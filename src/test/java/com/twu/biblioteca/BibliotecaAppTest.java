@@ -10,6 +10,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 public class BibliotecaAppTest {
@@ -106,5 +108,14 @@ public class BibliotecaAppTest {
         when(bufferedReader.readLine()).thenReturn("3");
         biblioteca.showMenu();
         verify(printStream).println(biblioteca.RETURN_BOOK_OPTION);
+    }
+
+    @Test
+    public void shouldReturnBookByBookId() throws IOException {
+        int bookId = bookOne.id;
+        bookOne.setAvailable(false);
+        when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
+        biblioteca.returnBook(bookId);
+        assertEquals(true, bookOne.available);
     }
 }

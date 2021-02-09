@@ -86,4 +86,11 @@ public class BibliotecaApp {
     private void showReturnBookOption() {
         printStream.println(RETURN_BOOK_OPTION);
     }
+
+    public void returnBook(int bookId) {
+        for(Book book : listOfBooks){
+            if(book.id == bookId)
+                book.setAvailable(true);
+        }
+    }
 }
