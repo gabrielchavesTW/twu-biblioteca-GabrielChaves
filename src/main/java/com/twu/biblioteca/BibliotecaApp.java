@@ -13,7 +13,7 @@ public class BibliotecaApp {
     private final BufferedReader bufferedReader;
     private final List<Book> listOfBooks;
     public static final String WELCOME_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!\n";
-    public static final String MENU = "1- List of books\n2- Checkout a book\n";
+    public static final String MENU = "1- List of books\n2- Checkout a book\n3-Return a book\n";
     public static final String INVALID_OPTION_MESSAGE = "Invalid option.";
     public static final String CHECKOUT_BOOK_MESSAGE = "Type the number of the book to checkout it.\n";
     public static final String CHECKOUT_SUCCESS_MESSAGE = "Thank you! Enjoy the book";
@@ -46,15 +46,19 @@ public class BibliotecaApp {
     private void showSelectedMenuOption(String menuOption) throws IOException {
         if (menuOption.equals("1")) {
             showListOfBooks();
-            showMenu();
         } else if (menuOption.equals("2")) {
             showCheckoutOption();
-            showMenu();
         } else if (menuOption.equals("3")) {
             showReturnBookOption();
         } else {
-            printStream.println(INVALID_OPTION_MESSAGE);
+            showInvalidMenuOptionMessage();
         }
+
+        showMenu();
+    }
+
+    public void showInvalidMenuOptionMessage(){
+        printStream.println(INVALID_OPTION_MESSAGE);
     }
 
     public void showListOfBooks() {

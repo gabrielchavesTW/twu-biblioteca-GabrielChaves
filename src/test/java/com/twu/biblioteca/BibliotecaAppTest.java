@@ -49,16 +49,8 @@ public class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldShowMenuOfOptions() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("132");
-        biblioteca.showMenu();
-        verify(printStream).println(BibliotecaApp.MENU);
-    }
-
-    @Test
-    public void shouldShowInvalidOptionMessage() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("132");
-        biblioteca.readMenuOption();
+    public void shouldShowInvalidOptionMessage() {
+        biblioteca.showInvalidMenuOptionMessage();
         verify(printStream).println(BibliotecaApp.INVALID_OPTION_MESSAGE);
     }
 
@@ -97,22 +89,6 @@ public class BibliotecaAppTest {
         biblioteca.showCheckoutOption();
         verify(printStream).println(BibliotecaApp.CHECKOUT_BOOK_MESSAGE);
         verify(printStream).println(BibliotecaApp.INVALID_CHECKOUT_MESSAGE);
-    }
-
-    @Test
-    public void shouldShowReturnBookOption() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("3");
-        biblioteca.showMenu();
-        verify(printStream).println(BibliotecaApp.RETURN_BOOK_OPTION);
-    }
-
-    @Test
-    public void shouldReturnBookByBookId() throws IOException {
-        int bookId = bookOne.id;
-        bookOne.setAvailable(false);
-        when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
-        biblioteca.showReturnBookOption();
-        Assertions.assertTrue(bookOne.available);
     }
 
     @Test
