@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 
@@ -13,12 +15,21 @@ public class BibliotecaAppTest {
      PrintStream printStream;
      BibliotecaApp biblioteca;
      BufferedReader bufferedReader;
+     List<Book> listOfBooks;
+
 
     @BeforeEach
     public void setUp() {
         printStream = mock(PrintStream.class);
         bufferedReader = mock(BufferedReader.class);
-        biblioteca = new BibliotecaApp(printStream, bufferedReader);
+        listOfBooks = new ArrayList<Book>(){
+            {
+                add(new Book("Hobbit"));
+                add(new Book("Perdido em Marte"));
+                add(new Book("Estação Carandiru"));
+            }
+        };
+        biblioteca = new BibliotecaApp(printStream, bufferedReader, listOfBooks);
     }
 
     @Test
@@ -37,7 +48,7 @@ public class BibliotecaAppTest {
     public void shouldReturnListOfBooksWhenOptionSelectedIsOne() throws IOException {
         when(bufferedReader.readLine()).thenReturn("1");
         biblioteca.readMenuOption();
-        verify(printStream).println("Show list of books");
+        verify(printStream).println("\n1-Hobbit\n2-Perdido em Marte\n3-Estação Carandiru");
     }
 
     @Test
