@@ -63,9 +63,8 @@ public class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldReturnListOfBooksWhenMenuOptionSelectedIsOne() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("1");
-        biblioteca.readMenuOption();
+    public void shouldReturnListOfBooksWhenMenuOptionSelectedIsOne() {
+        biblioteca.showListOfBooks();
         verify(printStream).println("\n1.Name: Hobbit | Author: J. R. R. Tolkien | Year: 1937" +
                 "\n2.Name: Perdido em Marte | Author: Andy Weir | Year: 2011" +
                 "\n3.Name: Estação Carandiru | Author: Drauzio Varella | Year: 1999");
@@ -73,13 +72,12 @@ public class BibliotecaAppTest {
 
 
     @Test
-    public void shouldShowOnlyAvailableBooks() throws IOException {
+    public void shouldShowOnlyAvailableBooks() {
         int bookIndex = listOfBooks.indexOf(bookOne);
         Book book = listOfBooks.get(bookIndex);
         book.setAvailable(false);
 
-        when(bufferedReader.readLine()).thenReturn("1");
-        biblioteca.readMenuOption();
+        biblioteca.showListOfBooks();
         verify(printStream).println("\n2.Name: Perdido em Marte | Author: Andy Weir | Year: 2011" +
                 "\n3.Name: Estação Carandiru | Author: Drauzio Varella | Year: 1999");
     }
@@ -105,7 +103,7 @@ public class BibliotecaAppTest {
         when(bufferedReader.readLine()).thenReturn(String.valueOf(invalidBookId));
         biblioteca.showCheckoutOption();
         verify(printStream).println(BibliotecaApp.CHECKOUT_BOOK_MESSAGE);
-        verify(printStream).println(biblioteca.INVALID_CHECKOUT_MESSAGE);
+        verify(printStream).println(BibliotecaApp.INVALID_CHECKOUT_MESSAGE);
     }
 
     @Test

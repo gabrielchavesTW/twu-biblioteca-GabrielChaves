@@ -9,9 +9,9 @@ import java.util.List;
 public class BibliotecaApp {
 
 
-    private PrintStream printStream;
-    private BufferedReader bufferedReader;
-    private List<Book> listOfBooks;
+    private final PrintStream printStream;
+    private final BufferedReader bufferedReader;
+    private final List<Book> listOfBooks;
     public static final String WELCOME_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!\n";
     public static final String MENU = "1- List of books\n2- Checkout a book\n";
     public static final String INVALID_OPTION_MESSAGE = "Invalid option.";
@@ -44,9 +44,10 @@ public class BibliotecaApp {
     }
 
     private void showSelectedMenuOption(String menuOption) throws IOException {
-        if (menuOption.equals("1"))
+        if (menuOption.equals("1")) {
             showListOfBooks();
-        else if (menuOption.equals("2")) {
+            showMenu();
+        } else if (menuOption.equals("2")) {
             showCheckoutOption();
         } else if (menuOption.equals("3")) {
             showReturnBookOption();
@@ -55,11 +56,11 @@ public class BibliotecaApp {
         }
     }
 
-    private void showListOfBooks() {
+    public void showListOfBooks() {
         String outputString = "";
         for (Book book : listOfBooks) {
             if (book.available)
-                outputString += MessageFormat.format("\n{0}.Name: {1} | Author: {2} | Year: {3}", book.id, book.name, book.author, String.valueOf(book.year));
+                outputString += (MessageFormat.format("\n{0}.Name: {1} | Author: {2} | Year: {3}", book.id, book.name, book.author, String.valueOf(book.year)));
         }
         printStream.println(outputString);
     }
@@ -71,7 +72,7 @@ public class BibliotecaApp {
 
     private void readCheckoutOption() throws IOException {
         String checkoutOption = bufferedReader.readLine();
-        checkoutBook(Integer.valueOf(checkoutOption));
+        checkoutBook(Integer.parseInt(checkoutOption));
     }
 
     private void checkoutBook(int bookId) {
@@ -96,7 +97,7 @@ public class BibliotecaApp {
 
     private void readReturnBookOption() throws IOException {
         String returnBookOption = bufferedReader.readLine();
-        returnBook(Integer.valueOf(returnBookOption));
+        returnBook(Integer.parseInt(returnBookOption));
     }
 
     private void returnBook(int bookId) {
