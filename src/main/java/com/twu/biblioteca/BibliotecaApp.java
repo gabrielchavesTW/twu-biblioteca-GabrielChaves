@@ -12,15 +12,18 @@ public class BibliotecaApp {
     private final PrintStream printStream;
     private final BufferedReader bufferedReader;
     private final List<Book> listOfBooks;
-    public static final String WELCOME_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!\n";
-    public static final String MENU = "1- List of books\n2- Checkout a book\n3-Return a book\n0- Exit\n";
-    public static final String INVALID_OPTION_MESSAGE = "Invalid option.";
-    public static final String CHECKOUT_BOOK_MESSAGE = "Type the number of the book to checkout it.\n";
-    public static final String CHECKOUT_SUCCESS_MESSAGE = "Thank you! Enjoy the book";
-    public static final String INVALID_CHECKOUT_MESSAGE = "Sorry, that book is not vailable.";
-    public static final String RETURN_BOOK_OPTION = "Type the book number that you want to return:\n";
-    public static final String RETURN_BOOK_SUCCESS_MESSAGE = "Thank you for returning the book.";
-    public static final String RETURN_BOOK_INVALID_MESSAGE = "That is not a valid book to return.";
+    public static final String WELCOME_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
+    public static final String MENU = "----------------------------------------------------------------------------------------------------------" +
+            "\n1- List of books\n2- Checkout a book\n3-Return a book\n0- Exit\n" +
+            "----------------------------------------------------------------------------------------------------------";
+    public static final String INVALID_OPTION_MESSAGE = "\nInvalid option.";
+    public static final String CHECKOUT_BOOK_MESSAGE = "\nType the number of the book to checkout it.";
+    public static final String CHECKOUT_SUCCESS_MESSAGE = "\nThank you! Enjoy the book";
+    public static final String INVALID_CHECKOUT_MESSAGE = "\nSorry, that book is not available.";
+    public static final String RETURN_BOOK_OPTION = "\nType the book number that you want to return:";
+    public static final String RETURN_BOOK_SUCCESS_MESSAGE = "\nThank you for returning the book.";
+    public static final String RETURN_BOOK_INVALID_MESSAGE = "\nThat is not a valid book to return.";
+    public static final String NO_BOOKS_AVAILABLE_MESSAGE = "\nNo books available.";
 
 
     public BibliotecaApp(PrintStream printStream, BufferedReader bufferedReader, List<Book> listOfBooks) {
@@ -69,6 +72,11 @@ public class BibliotecaApp {
             if (book.available)
                 outputString += (MessageFormat.format("\n{0}.Name: {1} | Author: {2} | Year: {3}", book.id, book.name, book.author, String.valueOf(book.year)));
         }
+
+        if(outputString.isEmpty()){
+            outputString = NO_BOOKS_AVAILABLE_MESSAGE;
+        }
+
         printStream.println(outputString);
     }
 

@@ -108,4 +108,14 @@ public class BibliotecaAppTest {
         Assertions.assertTrue(bookOne.available);
         verify(printStream).println(BibliotecaApp.RETURN_BOOK_INVALID_MESSAGE);
     }
+
+    @Test
+    public void shouldShowNoBooksAvailableMessage(){
+        bookOne.available = false;
+        bookTwo.available = false;
+        bookThree.available = false;
+        biblioteca.showListOfBooks();
+
+        verify(printStream).println(BibliotecaApp.NO_BOOKS_AVAILABLE_MESSAGE);
+    }
 }
