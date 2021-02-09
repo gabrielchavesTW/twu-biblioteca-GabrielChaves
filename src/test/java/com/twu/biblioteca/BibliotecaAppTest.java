@@ -16,19 +16,26 @@ public class BibliotecaAppTest {
      BibliotecaApp biblioteca;
      BufferedReader bufferedReader;
      List<Book> listOfBooks;
-
+     Book bookOne;
+     Book bookTwo;
+     Book bookThree;
 
     @BeforeEach
     public void setUp() {
         printStream = mock(PrintStream.class);
         bufferedReader = mock(BufferedReader.class);
+
+        bookOne = new Book("Hobbit", "J. R. R. Tolkien", 1937);
+        bookTwo = new Book("Perdido em Marte",  "Andy Weir", 2011);
+        bookThree = new Book("Estação Carandiru", "Drauzio Varella", 1999);
         listOfBooks = new ArrayList<Book>(){
             {
-                add(new Book("Hobbit", "J. R. R. Tolkien", 1937));
-                add(new Book("Perdido em Marte",  "Andy Weir", 2011));
-                add(new Book("Estação Carandiru", "Drauzio Varella", 1999));
+                add(bookOne);
+                add(bookTwo);
+                add(bookThree);
             }
         };
+
         biblioteca = new BibliotecaApp(printStream, bufferedReader, listOfBooks);
     }
 
@@ -45,6 +52,13 @@ public class BibliotecaAppTest {
     }
 
     @Test
+    public void shouldShowInvalidOptionMessage() throws IOException {
+        when(bufferedReader.readLine()).thenReturn("132");
+        biblioteca.readMenuOption();
+        verify(printStream).println(biblioteca.INVALID_OPTION_MESSAGE);
+    }
+
+    @Test
     public void shouldReturnListOfBooksWhenOptionSelectedIsOne() throws IOException {
         when(bufferedReader.readLine()).thenReturn("1");
         biblioteca.readMenuOption();
@@ -53,10 +67,16 @@ public class BibliotecaAppTest {
                 "\n3.Name: Estação Carandiru | Author: Drauzio Varella | Year: 1999");
     }
 
+
     @Test
-    public void shouldShowInvalidOption() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("132");
+    public void shouldShowOnlyAvailableBooks() throws IOException {
+        int bookIndex = listOfBooks.indexOf(bookOne);
+        Book book = listOfBooks.get(bookIndex);
+        book.setAvailable(false);
+
+        when(bufferedReader.readLine()).thenReturn("1");
         biblioteca.readMenuOption();
-        verify(printStream).println(biblioteca.INVALID_OPTION_MESSAGE);
+        verify(printStream).println("\n1.Name: Perdido em Marte | Author: Andy Weir | Year: 2011" +
+                "\n2.Name: Estação Carandiru | Author: Drauzio Varella | Year: 1999");
     }
 }
