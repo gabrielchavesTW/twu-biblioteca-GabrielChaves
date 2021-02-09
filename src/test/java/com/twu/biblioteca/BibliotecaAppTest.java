@@ -90,7 +90,7 @@ public class BibliotecaAppTest {
         when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
         biblioteca.showCheckoutMessage();
         verify(printStream).println(biblioteca.CHECKOUT_BOOK_MESSAGE);
-        verify(printStream).println(MessageFormat.format(biblioteca.CHECKOUT_SUCCESS_MESSAGE, bookName));
+        verify(printStream).println(biblioteca.CHECKOUT_SUCCESS_MESSAGE);
     }
 
     @Test
