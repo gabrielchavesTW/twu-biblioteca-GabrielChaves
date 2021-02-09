@@ -10,23 +10,21 @@ public class BibliotecaApp {
     private PrintStream printStream;
     private BufferedReader bufferedReader;
     private List<Book> listOfBooks;
-    public static final String WELCOME_MESSAGE = "";
-    public static final String MENU = "1- List of books";
+    public static final String WELCOME_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!\n";
+    public static final String MENU = "1- List of books\n2- Checkout a book\n";
     public static final String INVALID_OPTION_MESSAGE = "Invalid option.";
+    public static final String CHECKOUT_BOOK_MESSAGE = "Type the number of the book to checkout it.\n";
+    public static final String CHECKOUT_SUCCESS_MESSAGE = "The book {0} was checked out with success!";
 
 
-
-    public BibliotecaApp(PrintStream printStream, BufferedReader bufferedReader, List<Book> listOfBooks){
+    public BibliotecaApp(PrintStream printStream, BufferedReader bufferedReader, List<Book> listOfBooks) {
         this.printStream = printStream;
         this.bufferedReader = bufferedReader;
         this.listOfBooks = listOfBooks;
     }
 
-    public void showWelcomeMessage(){
-        printStream.println(WELCOME_MESSAGE);
-    }
-
     public void showMenu() throws IOException {
+        printStream.println(WELCOME_MESSAGE);
         printStream.println(MENU);
         readMenuOption();
     }
@@ -37,22 +35,46 @@ public class BibliotecaApp {
     }
 
     private void showSelectedMenuOption(String menuOption) throws IOException {
-        if(menuOption == "1")
+        if (menuOption == "1")
             showListOfBooks();
-        else {
+        else if (menuOption == "2") {
+            showCheckoutMessage();
+        } else {
             printStream.println(INVALID_OPTION_MESSAGE);
         }
     }
 
     private void showListOfBooks() {
-        int index = 1;
         String outputString = "";
-        for(Book book : listOfBooks){
-            if(book.available){
-                outputString += MessageFormat.format("\n{0}.Name: {1} | Author: {2} | Year: {3}", index, book.name, book.author, String.valueOf(book.year));
-                index++;
-            }
+        for (Book book : listOfBooks) {
+            if (book.available)
+                outputString += MessageFormat.format("\n{0}.Name: {1} | Author: {2} | Year: {3}", book.id, book.name, book.author, String.valueOf(book.year));
         }
         printStream.println(outputString);
+    }
+
+    public void showCheckoutMessage() throws IOException {
+        printStream.println(CHECKOUT_BOOK_MESSAGE);
+        readCheckoutOption();
+    }
+
+    private void readCheckoutOption() throws IOException {
+        String checkoutOption = bufferedReader.readLine();
+        checkoutBook(Integer.valueOf(checkoutOption));
+    }
+
+    private void checkoutBook(int bookId) {
+        boolean bookFindedAndChecked = false;
+        String bookName = "";
+        for (Book book : listOfBooks) {
+            if (book.id == bookId) {
+                bookName = book.name;
+                book.setAvailable(false);
+                bookFindedAndChecked = true;
+            }
+        }
+
+        if (bookFindedAndChecked)
+            printStream.println(MessageFormat.format(CHECKOUT_SUCCESS_MESSAGE, bookName));
     }
 }

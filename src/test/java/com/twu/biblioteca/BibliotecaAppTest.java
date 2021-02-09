@@ -6,29 +6,30 @@ import org.junit.jupiter.api.Test;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
 
 public class BibliotecaAppTest {
-     PrintStream printStream;
-     BibliotecaApp biblioteca;
-     BufferedReader bufferedReader;
-     List<Book> listOfBooks;
-     Book bookOne;
-     Book bookTwo;
-     Book bookThree;
+    PrintStream printStream;
+    BibliotecaApp biblioteca;
+    BufferedReader bufferedReader;
+    List<Book> listOfBooks;
+    Book bookOne;
+    Book bookTwo;
+    Book bookThree;
 
     @BeforeEach
     public void setUp() {
         printStream = mock(PrintStream.class);
         bufferedReader = mock(BufferedReader.class);
 
-        bookOne = new Book("Hobbit", "J. R. R. Tolkien", 1937);
-        bookTwo = new Book("Perdido em Marte",  "Andy Weir", 2011);
-        bookThree = new Book("Estação Carandiru", "Drauzio Varella", 1999);
-        listOfBooks = new ArrayList<Book>(){
+        bookOne = new Book(1, "Hobbit", "J. R. R. Tolkien", 1937);
+        bookTwo = new Book(2, "Perdido em Marte", "Andy Weir", 2011);
+        bookThree = new Book(3, "Estação Carandiru", "Drauzio Varella", 1999);
+        listOfBooks = new ArrayList<Book>() {
             {
                 add(bookOne);
                 add(bookTwo);
@@ -40,14 +41,9 @@ public class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldShowWelcomeMessage() {
-        biblioteca.showWelcomeMessage();
-        verify(printStream).println(biblioteca.WELCOME_MESSAGE);
-    }
-
-    @Test
-    public void shouldShowMenuOfOptions() throws IOException {
+    public void shouldShowWelcomeMessageAndMenuOfOptions() throws IOException {
         biblioteca.showMenu();
+        verify(printStream).println(biblioteca.WELCOME_MESSAGE);
         verify(printStream).println(biblioteca.MENU);
     }
 
@@ -59,7 +55,7 @@ public class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldReturnListOfBooksWhenOptionSelectedIsOne() throws IOException {
+    public void shouldReturnListOfBooksWhenMenuOptionSelectedIsOne() throws IOException {
         when(bufferedReader.readLine()).thenReturn("1");
         biblioteca.readMenuOption();
         verify(printStream).println("\n1.Name: Hobbit | Author: J. R. R. Tolkien | Year: 1937" +
@@ -76,7 +72,24 @@ public class BibliotecaAppTest {
 
         when(bufferedReader.readLine()).thenReturn("1");
         biblioteca.readMenuOption();
-        verify(printStream).println("\n1.Name: Perdido em Marte | Author: Andy Weir | Year: 2011" +
-                "\n2.Name: Estação Carandiru | Author: Drauzio Varella | Year: 1999");
+        verify(printStream).println("\n2.Name: Perdido em Marte | Author: Andy Weir | Year: 2011" +
+                "\n3.Name: Estação Carandiru | Author: Drauzio Varella | Year: 1999");
+    }
+
+    @Test
+    public void shouldReturnCheckoutMessageWhenMenuOptionSelectedIsTwo() throws IOException {
+        when(bufferedReader.readLine()).thenReturn("2");
+        biblioteca.readMenuOption();
+        verify(printStream).println(biblioteca.CHECKOUT_BOOK_MESSAGE);
+    }
+
+    @Test
+    public void shouldShowBookCheckoutSuccessMessage() throws IOException {
+        int bookId = bookOne.id;
+        String bookName = bookOne.name;
+        when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
+        biblioteca.showCheckoutMessage();
+        verify(printStream).println(biblioteca.CHECKOUT_BOOK_MESSAGE);
+        verify(printStream).println(MessageFormat.format(biblioteca.CHECKOUT_SUCCESS_MESSAGE, bookName));
     }
 }

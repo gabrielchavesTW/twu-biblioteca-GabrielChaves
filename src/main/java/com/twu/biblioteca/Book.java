@@ -1,6 +1,7 @@
 package com.twu.biblioteca;
 
 public class Book {
+    int id;
     String name;
     String author;
     int year;
@@ -10,7 +11,8 @@ public class Book {
         this.available = available;
     }
 
-    public Book(String name, String author, int year) {
+    public Book(int id, String name, String author, int year) {
+        this.id = id;
         this.name = name;
         this.author = author;
         this.year = year;
