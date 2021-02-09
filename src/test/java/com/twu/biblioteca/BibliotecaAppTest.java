@@ -45,9 +45,15 @@ public class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldShowWelcomeMessageAndMenuOfOptions() throws IOException {
-        biblioteca.showMenu();
+    public void shouldShowWelcomeMessage() throws IOException {
+        biblioteca.showWelcomeMessage();
         verify(printStream).println(biblioteca.WELCOME_MESSAGE);
+    }
+
+    @Test
+    public void shouldShowMenuOfOptions() throws IOException {
+        when(bufferedReader.readLine()).thenReturn("132");
+        biblioteca.showMenu();
         verify(printStream).println(biblioteca.MENU);
     }
 

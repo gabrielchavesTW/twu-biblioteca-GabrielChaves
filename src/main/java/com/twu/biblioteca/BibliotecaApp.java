@@ -29,8 +29,11 @@ public class BibliotecaApp {
         this.listOfBooks = listOfBooks;
     }
 
-    public void showMenu() throws IOException {
+    public void showWelcomeMessage() {
         printStream.println(WELCOME_MESSAGE);
+    }
+
+    public void showMenu() throws IOException {
         printStream.println(MENU);
         readMenuOption();
     }
