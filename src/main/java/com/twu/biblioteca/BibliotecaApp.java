@@ -16,6 +16,7 @@ public class BibliotecaApp {
     public static final String CHECKOUT_BOOK_MESSAGE = "Type the number of the book to checkout it.\n";
     public static final String CHECKOUT_SUCCESS_MESSAGE = "Thank you! Enjoy the book";
     public static final String INVALID_CHECKOUT_MESSAGE = "Sorry, that book is not vailable.";
+    public static final String RETURN_BOOK_OPTION = "Type the book number that you want to return:\n";
 
 
     public BibliotecaApp(PrintStream printStream, BufferedReader bufferedReader, List<Book> listOfBooks) {
@@ -39,10 +40,13 @@ public class BibliotecaApp {
         if (menuOption == "1")
             showListOfBooks();
         else if (menuOption == "2") {
-            showCheckoutMessage();
+            showCheckoutOption();
+        } else if (menuOption == "3") {
+            showReturnBookOption();
         } else {
             printStream.println(INVALID_OPTION_MESSAGE);
         }
+
     }
 
     private void showListOfBooks() {
@@ -54,7 +58,7 @@ public class BibliotecaApp {
         printStream.println(outputString);
     }
 
-    public void showCheckoutMessage() throws IOException {
+    public void showCheckoutOption() throws IOException {
         printStream.println(CHECKOUT_BOOK_MESSAGE);
         readCheckoutOption();
     }
@@ -77,5 +81,9 @@ public class BibliotecaApp {
             printStream.println(CHECKOUT_SUCCESS_MESSAGE);
         else
             printStream.println(INVALID_CHECKOUT_MESSAGE);
+    }
+
+    private void showReturnBookOption() {
+        printStream.println(RETURN_BOOK_OPTION);
     }
 }

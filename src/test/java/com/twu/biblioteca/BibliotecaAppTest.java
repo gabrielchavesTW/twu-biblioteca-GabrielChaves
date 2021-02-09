@@ -86,9 +86,8 @@ public class BibliotecaAppTest {
     @Test
     public void shouldShowBookCheckoutSuccessMessage() throws IOException {
         int bookId = bookOne.id;
-        String bookName = bookOne.name;
         when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
-        biblioteca.showCheckoutMessage();
+        biblioteca.showCheckoutOption();
         verify(printStream).println(biblioteca.CHECKOUT_BOOK_MESSAGE);
         verify(printStream).println(biblioteca.CHECKOUT_SUCCESS_MESSAGE);
     }
@@ -97,8 +96,15 @@ public class BibliotecaAppTest {
     public void shouldShowBookCheckoutInvalidMessage() throws IOException {
         int bookId = 14201;
         when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
-        biblioteca.showCheckoutMessage();
+        biblioteca.showCheckoutOption();
         verify(printStream).println(biblioteca.CHECKOUT_BOOK_MESSAGE);
         verify(printStream).println(biblioteca.INVALID_CHECKOUT_MESSAGE);
+    }
+
+    @Test
+    public void shouldShowReturnBookOption() throws IOException {
+        when(bufferedReader.readLine()).thenReturn("3");
+        biblioteca.showMenu();
+        verify(printStream).println(biblioteca.RETURN_BOOK_OPTION);
     }
 }
