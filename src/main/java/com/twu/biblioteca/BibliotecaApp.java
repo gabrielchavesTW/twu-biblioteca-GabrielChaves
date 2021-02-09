@@ -48,7 +48,7 @@ public class BibliotecaApp {
         int index = 1;
         String outputString = "";
         for(Book book : listOfBooks){
-            outputString += MessageFormat.format("\n{0}.Name:{1} - Author:{2} - Year:{3}", index, book.name, book.author, String.valueOf(book.year));
+            outputString += MessageFormat.format("\n{0}.Name: {1} | Author: {2} | Year: {3}", index, book.name, book.author, String.valueOf(book.year));
             index++;
         }
         printStream.println(outputString);

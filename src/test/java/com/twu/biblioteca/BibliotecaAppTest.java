@@ -48,9 +48,9 @@ public class BibliotecaAppTest {
     public void shouldReturnListOfBooksWhenOptionSelectedIsOne() throws IOException {
         when(bufferedReader.readLine()).thenReturn("1");
         biblioteca.readMenuOption();
-        verify(printStream).println("\n1.Name:Hobbit - Author:J. R. R. Tolkien - Year:1937" +
-                "\n2.Name:Perdido em Marte - Author:Andy Weir - Year:2011" +
-                "\n3.Name:Estação Carandiru - Author:Drauzio Varella - Year:1999");
+        verify(printStream).println("\n1.Name: Hobbit | Author: J. R. R. Tolkien | Year: 1937" +
+                "\n2.Name: Perdido em Marte | Author: Andy Weir | Year: 2011" +
+                "\n3.Name: Estação Carandiru | Author: Drauzio Varella | Year: 1999");
     }
 
     @Test
