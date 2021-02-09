@@ -118,4 +118,14 @@ public class BibliotecaAppTest {
         biblioteca.returnBook(bookId);
         assertEquals(true, bookOne.available);
     }
+
+    @Test
+    public void shouldShowReturnBookSuccessMessage() throws IOException {
+        int bookId = bookOne.id;
+        bookOne.setAvailable(false);
+        when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
+        biblioteca.returnBook(bookId);
+        assertEquals(true, bookOne.available);
+        verify(printStream).println(biblioteca.RETURN_BOOK_SUCCESS_MESSAGE);
+    }
 }

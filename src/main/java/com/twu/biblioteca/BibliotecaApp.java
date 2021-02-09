@@ -7,6 +7,7 @@ import java.text.MessageFormat;
 import java.util.List;
 
 public class BibliotecaApp {
+
     private PrintStream printStream;
     private BufferedReader bufferedReader;
     private List<Book> listOfBooks;
@@ -17,6 +18,7 @@ public class BibliotecaApp {
     public static final String CHECKOUT_SUCCESS_MESSAGE = "Thank you! Enjoy the book";
     public static final String INVALID_CHECKOUT_MESSAGE = "Sorry, that book is not vailable.";
     public static final String RETURN_BOOK_OPTION = "Type the book number that you want to return:\n";
+    public static final String RETURN_BOOK_SUCCESS_MESSAGE = "Thank you for returning the book.";
 
 
     public BibliotecaApp(PrintStream printStream, BufferedReader bufferedReader, List<Book> listOfBooks) {
@@ -88,9 +90,15 @@ public class BibliotecaApp {
     }
 
     public void returnBook(int bookId) {
+        boolean anyBookReturned = false;
         for(Book book : listOfBooks){
-            if(book.id == bookId)
+            if(book.id == bookId){
                 book.setAvailable(true);
+                anyBookReturned = true;
+            }
         }
+
+        if(anyBookReturned)
+            printStream.println(RETURN_BOOK_SUCCESS_MESSAGE);
     }
 }
