@@ -22,11 +22,13 @@ public class BibliotecaAppTest {
     Book bookOne;
     Book bookTwo;
     Book bookThree;
+    int invalidBookId;
 
     @BeforeEach
     public void setUp() {
         printStream = mock(PrintStream.class);
         bufferedReader = mock(BufferedReader.class);
+        invalidBookId = 3210;
 
         bookOne = new Book(1, "Hobbit", "J. R. R. Tolkien", 1937);
         bookTwo = new Book(2, "Perdido em Marte", "Andy Weir", 2011);
@@ -96,8 +98,7 @@ public class BibliotecaAppTest {
 
     @Test
     public void shouldShowBookCheckoutInvalidMessage() throws IOException {
-        int bookId = 14201;
-        when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
+        when(bufferedReader.readLine()).thenReturn(String.valueOf(invalidBookId));
         biblioteca.showCheckoutOption();
         verify(printStream).println(biblioteca.CHECKOUT_BOOK_MESSAGE);
         verify(printStream).println(biblioteca.INVALID_CHECKOUT_MESSAGE);
@@ -115,7 +116,7 @@ public class BibliotecaAppTest {
         int bookId = bookOne.id;
         bookOne.setAvailable(false);
         when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
-        biblioteca.returnBook(bookId);
+        biblioteca.showReturnBookOption();
         assertEquals(true, bookOne.available);
     }
 
@@ -124,8 +125,16 @@ public class BibliotecaAppTest {
         int bookId = bookOne.id;
         bookOne.setAvailable(false);
         when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
-        biblioteca.returnBook(bookId);
+        biblioteca.showReturnBookOption();
         assertEquals(true, bookOne.available);
         verify(printStream).println(biblioteca.RETURN_BOOK_SUCCESS_MESSAGE);
+    }
+
+    @Test
+    public void shouldShowReturnBookInvalidMessage() throws IOException {
+        when(bufferedReader.readLine()).thenReturn(String.valueOf(invalidBookId));
+        biblioteca.showReturnBookOption();
+        assertEquals(true, bookOne.available);
+        verify(printStream).println(biblioteca.RETURN_BOOK_INVALID_MESSAGE);
     }
 }

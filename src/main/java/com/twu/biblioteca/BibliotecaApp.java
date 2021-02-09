@@ -8,6 +8,7 @@ import java.util.List;
 
 public class BibliotecaApp {
 
+
     private PrintStream printStream;
     private BufferedReader bufferedReader;
     private List<Book> listOfBooks;
@@ -19,6 +20,7 @@ public class BibliotecaApp {
     public static final String INVALID_CHECKOUT_MESSAGE = "Sorry, that book is not vailable.";
     public static final String RETURN_BOOK_OPTION = "Type the book number that you want to return:\n";
     public static final String RETURN_BOOK_SUCCESS_MESSAGE = "Thank you for returning the book.";
+    public static final String RETURN_BOOK_INVALID_MESSAGE = "That is not a valid book to return.";
 
 
     public BibliotecaApp(PrintStream printStream, BufferedReader bufferedReader, List<Book> listOfBooks) {
@@ -85,11 +87,17 @@ public class BibliotecaApp {
             printStream.println(INVALID_CHECKOUT_MESSAGE);
     }
 
-    private void showReturnBookOption() {
+    public void showReturnBookOption() throws IOException {
         printStream.println(RETURN_BOOK_OPTION);
+        readReturnBookOption();
     }
 
-    public void returnBook(int bookId) {
+    private void readReturnBookOption() throws IOException {
+        String returnBookOption = bufferedReader.readLine();
+        returnBook(Integer.valueOf(returnBookOption));
+    }
+
+    private void returnBook(int bookId) {
         boolean anyBookReturned = false;
         for(Book book : listOfBooks){
             if(book.id == bookId){
@@ -100,5 +108,7 @@ public class BibliotecaApp {
 
         if(anyBookReturned)
             printStream.println(RETURN_BOOK_SUCCESS_MESSAGE);
+        else
+            printStream.println(RETURN_BOOK_INVALID_MESSAGE);
     }
 }
