@@ -41,16 +41,15 @@ public class BibliotecaApp {
     }
 
     private void showSelectedMenuOption(String menuOption) throws IOException {
-        if (menuOption == "1")
+        if (menuOption.equals("1"))
             showListOfBooks();
-        else if (menuOption == "2") {
+        else if (menuOption.equals("2")) {
             showCheckoutOption();
-        } else if (menuOption == "3") {
+        } else if (menuOption.equals("3")) {
             showReturnBookOption();
         } else {
             printStream.println(INVALID_OPTION_MESSAGE);
         }
-
     }
 
     private void showListOfBooks() {
@@ -99,14 +98,14 @@ public class BibliotecaApp {
 
     private void returnBook(int bookId) {
         boolean anyBookReturned = false;
-        for(Book book : listOfBooks){
-            if(book.id == bookId){
+        for (Book book : listOfBooks) {
+            if (book.id == bookId) {
                 book.setAvailable(true);
                 anyBookReturned = true;
             }
         }
 
-        if(anyBookReturned)
+        if (anyBookReturned)
             printStream.println(RETURN_BOOK_SUCCESS_MESSAGE);
         else
             printStream.println(RETURN_BOOK_INVALID_MESSAGE);
