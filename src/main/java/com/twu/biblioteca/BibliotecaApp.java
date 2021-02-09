@@ -15,6 +15,7 @@ public class BibliotecaApp {
     public static final String INVALID_OPTION_MESSAGE = "Invalid option.";
     public static final String CHECKOUT_BOOK_MESSAGE = "Type the number of the book to checkout it.\n";
     public static final String CHECKOUT_SUCCESS_MESSAGE = "The book {0} was checked out with success!";
+    public static final String INVALID_CHECKOUT_MESSAGE = "Ooops, some thing went wrong when we try to checkout this book :(";
 
 
     public BibliotecaApp(PrintStream printStream, BufferedReader bufferedReader, List<Book> listOfBooks) {
@@ -76,5 +77,7 @@ public class BibliotecaApp {
 
         if (bookFindedAndChecked)
             printStream.println(MessageFormat.format(CHECKOUT_SUCCESS_MESSAGE, bookName));
+        else
+            printStream.println(INVALID_CHECKOUT_MESSAGE);
     }
 }

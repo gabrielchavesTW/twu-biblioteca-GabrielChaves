@@ -92,4 +92,13 @@ public class BibliotecaAppTest {
         verify(printStream).println(biblioteca.CHECKOUT_BOOK_MESSAGE);
         verify(printStream).println(MessageFormat.format(biblioteca.CHECKOUT_SUCCESS_MESSAGE, bookName));
     }
+
+    @Test
+    public void shouldShowBookCheckoutInvalidMessage() throws IOException {
+        int bookId = 14201;
+        when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
+        biblioteca.showCheckoutMessage();
+        verify(printStream).println(biblioteca.CHECKOUT_BOOK_MESSAGE);
+        verify(printStream).println(biblioteca.INVALID_CHECKOUT_MESSAGE);
+    }
 }
