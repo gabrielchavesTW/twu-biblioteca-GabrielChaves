@@ -83,13 +83,6 @@ public class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldReturnCheckoutMessageWhenMenuOptionSelectedIsTwo() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("2");
-        biblioteca.readMenuOption();
-        verify(printStream).println(BibliotecaApp.CHECKOUT_BOOK_MESSAGE);
-    }
-
-    @Test
     public void shouldShowBookCheckoutSuccessMessage() throws IOException {
         int bookId = bookOne.id;
         when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));

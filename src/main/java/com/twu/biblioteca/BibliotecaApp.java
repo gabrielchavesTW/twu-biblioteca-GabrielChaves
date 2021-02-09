@@ -49,6 +49,7 @@ public class BibliotecaApp {
             showMenu();
         } else if (menuOption.equals("2")) {
             showCheckoutOption();
+            showMenu();
         } else if (menuOption.equals("3")) {
             showReturnBookOption();
         } else {
