@@ -19,7 +19,7 @@ public class BibliotecaApp {
     public static final String INVALID_OPTION_MESSAGE = "\nInvalid option.";
     public static final String CHECKOUT_BOOK_MESSAGE = "\nType the number of the book to checkout it.";
     public static final String CHECKOUT_SUCCESS_MESSAGE = "\nThank you! Enjoy the book";
-    public static final String INVALID_CHECKOUT_MESSAGE = "\nSorry, that book is not available.";
+    public static final String CHECKOUT_INVALID_MESSAGE = "\nSorry, that book is not available.";
     public static final String RETURN_BOOK_OPTION = "\nType the book number that you want to return:";
     public static final String RETURN_BOOK_SUCCESS_MESSAGE = "\nThank you for returning the book.";
     public static final String RETURN_BOOK_INVALID_MESSAGE = "\nThat is not a valid book to return.";
@@ -93,7 +93,7 @@ public class BibliotecaApp {
     private void checkoutBook(int bookId) {
         boolean bookFindedAndChecked = false;
         for (Book book : listOfBooks) {
-            if (book.id == bookId) {
+            if (book.id == bookId && book.available == true) {
                 book.setAvailable(false);
                 bookFindedAndChecked = true;
             }
@@ -102,7 +102,7 @@ public class BibliotecaApp {
         if (bookFindedAndChecked)
             printStream.println(CHECKOUT_SUCCESS_MESSAGE);
         else
-            printStream.println(INVALID_CHECKOUT_MESSAGE);
+            printStream.println(CHECKOUT_INVALID_MESSAGE);
     }
 
     public void showReturnBookOption() throws IOException {

@@ -88,7 +88,7 @@ public class BibliotecaAppTest {
         when(bufferedReader.readLine()).thenReturn(String.valueOf(invalidBookId));
         biblioteca.showCheckoutOption();
         verify(printStream).println(BibliotecaApp.CHECKOUT_BOOK_MESSAGE);
-        verify(printStream).println(BibliotecaApp.INVALID_CHECKOUT_MESSAGE);
+        verify(printStream).println(BibliotecaApp.CHECKOUT_INVALID_MESSAGE);
     }
 
     @Test
@@ -117,5 +117,15 @@ public class BibliotecaAppTest {
         biblioteca.showListOfBooks();
 
         verify(printStream).println(BibliotecaApp.NO_BOOKS_AVAILABLE_MESSAGE);
+    }
+
+    @Test
+    public void shouldShowMessageWhenTryToCheckoutABookThatWasAlreadyChecked() throws IOException {
+        int bookId = bookOne.id;
+        bookOne.setAvailable(false);
+        when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
+        biblioteca.showCheckoutOption();
+        verify(printStream).println(BibliotecaApp.CHECKOUT_BOOK_MESSAGE);
+        verify(printStream).println(BibliotecaApp.CHECKOUT_INVALID_MESSAGE);
     }
 }
