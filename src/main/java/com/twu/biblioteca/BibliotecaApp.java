@@ -3,14 +3,12 @@ package com.twu.biblioteca;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.List;
 
 public class BibliotecaApp {
 
 
     private final PrintStream printStream;
     private final BufferedReader bufferedReader;
-    private List<Book> listOfBooks;
     private final Biblioteca biblioteca;
     public static final String WELCOME_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
     public static final String MENU = "----------------------------------------------------------------------------------------------------------" +
@@ -19,15 +17,12 @@ public class BibliotecaApp {
     public static final String INVALID_OPTION_MESSAGE = "\nInvalid option.";
     public static final String CHECKOUT_BOOK_MESSAGE = "\nType the number of the book to checkout it.";
     public static final String RETURN_BOOK_OPTION = "\nType the book number that you want to return:";
-    public static final String RETURN_BOOK_SUCCESS_MESSAGE = "\nThank you for returning the book.";
-    public static final String RETURN_BOOK_INVALID_MESSAGE = "\nThat is not a valid book to return.";
 
 
-    public BibliotecaApp(PrintStream printStream, BufferedReader bufferedReader, Biblioteca biblioteca, List<Book> books) {
+    public BibliotecaApp(PrintStream printStream, BufferedReader bufferedReader, Biblioteca biblioteca) {
         this.printStream = printStream;
         this.bufferedReader = bufferedReader;
         this.biblioteca = biblioteca;
-        this.listOfBooks = books;
     }
 
     public void showWelcomeMessage() {
@@ -82,21 +77,6 @@ public class BibliotecaApp {
 
     private void readReturnBookOption() throws IOException {
         String returnBookOption = bufferedReader.readLine();
-        returnBook(Integer.parseInt(returnBookOption));
-    }
-
-    private void returnBook(int bookId) {
-        boolean anyBookReturned = false;
-        for (Book book : listOfBooks) {
-            if (book.id == bookId) {
-                book.setAvailable(true);
-                anyBookReturned = true;
-            }
-        }
-
-        if (anyBookReturned)
-            printStream.println(RETURN_BOOK_SUCCESS_MESSAGE);
-        else
-            printStream.println(RETURN_BOOK_INVALID_MESSAGE);
+        biblioteca.returnBook(Integer.parseInt(returnBookOption));
     }
 }

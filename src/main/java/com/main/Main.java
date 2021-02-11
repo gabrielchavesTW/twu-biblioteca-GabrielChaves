@@ -13,7 +13,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
         Biblioteca biblioteca = new Biblioteca(System.out, books());
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(System.out, new BufferedReader(new InputStreamReader(System.in)), biblioteca, books());
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(System.out, new BufferedReader(new InputStreamReader(System.in)), biblioteca);
         bibliotecaApp.showWelcomeMessage();
         bibliotecaApp.showMenu();
     }
