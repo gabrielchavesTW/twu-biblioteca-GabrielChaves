@@ -15,7 +15,8 @@ public class Main {
         Biblioteca biblioteca = new Biblioteca(System.out, books());
         Menu menu = new Menu(System.out, new BufferedReader(new InputStreamReader(System.in)), biblioteca);
         menu.showWelcomeMessage();
-        menu.showMenu();
+        menu.startMenu();
+        System.exit(0);
     }
 
     private static List<Book> books() {

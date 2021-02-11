@@ -33,23 +33,32 @@ public class MenuTest {
     }
 
     @Test
-    public void shouldShowInvalidOptionMessage() {
-        menu.showInvalidMenuOptionMessage();
+    public void shouldCallBibliotecaShowListOfBooks() throws IOException {
+        when(bufferedReader.readLine()).thenReturn(MenuOptions.SHOW_LIST_OF_BOOKS).thenReturn(MenuOptions.QUIT_APPLICATION);
+        menu.startMenu();
+        verify(biblioteca).showListOfBooks();
+    }
+
+    @Test
+    public void shouldShowInvalidOptionMessage() throws IOException {
+        String invalidOption = "klm21";
+        when(bufferedReader.readLine()).thenReturn(invalidOption).thenReturn(MenuOptions.QUIT_APPLICATION);
+        menu.startMenu();
         verify(printStream).println(Messages.INVALID_OPTION);
     }
 
     @Test
     public void shouldShowCheckoutBookMessageAndCallCheckoutBook() throws IOException {
-        when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
-        menu.showCheckoutOption();
+        when(bufferedReader.readLine()).thenReturn(MenuOptions.CHECKOUT_BOOK).thenReturn(String.valueOf(bookId)).thenReturn(MenuOptions.QUIT_APPLICATION);
+        menu.startMenu();
         verify(printStream).println(Messages.CHECKOUT_BOOK);
         verify(biblioteca).checkoutBook(bookId);
     }
 
     @Test
     public void shouldShowReturnBookOptionAndCallReturnBook() throws IOException {
-        when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
-        menu.showReturnBookOption();
+        when(bufferedReader.readLine()).thenReturn(MenuOptions.RETURN_BOOK).thenReturn(String.valueOf(bookId)).thenReturn(MenuOptions.QUIT_APPLICATION);
+        menu.startMenu();
         verify(printStream).println(Messages.RETURN_BOOK_OPTION);
         verify(biblioteca).returnBook(bookId);
     }

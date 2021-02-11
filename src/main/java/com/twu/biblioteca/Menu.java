@@ -19,38 +19,46 @@ public class Menu {
         printStream.println(Messages.WELCOME);
     }
 
-    public void showMenu() throws IOException {
+    private void showMenu()  {
         printStream.println(Messages.MENU);
-        readMenuOption();
     }
 
-    public void readMenuOption() throws IOException {
+    public void startMenu() throws IOException {
+        boolean closeMenu;
+        do{
+            showMenu();
+            closeMenu = readMenuOption();
+        } while(!closeMenu);
+    }
+
+    private boolean readMenuOption() throws IOException {
         String menuOption = bufferedReader.readLine();
-        showSelectedMenuOption(menuOption);
+        return showSelectedMenuOption(menuOption);
     }
 
-    private void showSelectedMenuOption(String menuOption) throws IOException {
-        if (menuOption.equals("1")) {
+    private boolean showSelectedMenuOption(String menuOption) throws IOException {
+        boolean closeMenu = false;
+        if (menuOption.equals(MenuOptions.SHOW_LIST_OF_BOOKS)) {
             biblioteca.showListOfBooks();
-        } else if (menuOption.equals("2")) {
+        } else if (menuOption.equals(MenuOptions.CHECKOUT_BOOK)) {
             showCheckoutOption();
-        } else if (menuOption.equals("3")) {
+        } else if (menuOption.equals(MenuOptions.RETURN_BOOK)) {
             showReturnBookOption();
-        } else if (menuOption.equals("0")) {
-            System.exit(0);
+        } else if (menuOption.equals(MenuOptions.QUIT_APPLICATION)) {
+            closeMenu = true;
         } else {
             showInvalidMenuOptionMessage();
         }
 
-        showMenu();
+        return closeMenu;
     }
 
-    public void showInvalidMenuOptionMessage() {
+    private void showInvalidMenuOptionMessage() {
         printStream.println(Messages.INVALID_OPTION);
     }
 
 
-    public void showCheckoutOption() throws IOException {
+    private void showCheckoutOption() throws IOException {
         printStream.println(Messages.CHECKOUT_BOOK);
         readCheckoutOption();
     }
@@ -60,7 +68,7 @@ public class Menu {
         biblioteca.checkoutBook(Integer.parseInt(checkoutOption));
     }
 
-    public void showReturnBookOption() throws IOException {
+    private void showReturnBookOption() throws IOException {
         printStream.println(Messages.RETURN_BOOK_OPTION);
         readReturnBookOption();
     }
