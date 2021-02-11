@@ -43,7 +43,7 @@ public class BibliotecaTest {
     }
 
     @Test
-    public void shouldShowBookCheckoutSuccessMessage(){
+    public void shouldShowBookCheckoutSuccessMessageAndChangeBookAvailableToFalse(){
         biblioteca.checkoutBook(bookOne.id);
         verify(printStream).println(Messages.BOOK_CHECKOUT_SUCCESS);
         Assertions.assertFalse(bookOne.isAvailable());
@@ -59,16 +59,14 @@ public class BibliotecaTest {
     }
 
     @Test
-    public void shouldShowBookCheckoutUnsuccessMessageWhenBookIdDoenstExist(){
-        biblioteca.checkoutBook(1332);
+    public void shouldShowBookCheckoutUnsuccessMessageWhenBookIsNotAvailableToCheckout(){
+        bookOne.setAvailable(false);
+        biblioteca.checkoutBook(bookOne.id);
         verify(printStream).println(Messages.BOOK_CHECKOUT_UNSUCCESS);
-        Assertions.assertTrue(bookOne.isAvailable());
-        Assertions.assertTrue(bookTwo.isAvailable());
-        Assertions.assertTrue(bookThree.isAvailable());
     }
 
     @Test
-    public void shouldShowBookCheckoutUnsuccessMessageWhenTryToCheckoutABookThatWasAlreadyChecked() {
+    public void shouldShowBookCheckoutUnsuccessMessageWhenTryToCheckoutABookThatIsNotAvailable() {
         int bookId = bookOne.id;
         bookOne.setAvailable(false);
         biblioteca.checkoutBook(bookId);
@@ -84,8 +82,9 @@ public class BibliotecaTest {
     }
 
     @Test
-    public void shouldShowUnsuccessReturnMessageWhenBookIdDoesntExist(){
-        biblioteca.returnBook(1332);
+    public void shouldShowUnsuccessReturnMessageWhenBookIsNotAvailableToReturn(){
+        bookOne.setAvailable(true);
+        biblioteca.returnBook(bookOne.id);
         verify(printStream).println(Messages.BOOK_RETURN_UNSUCCESS);
     }
 
