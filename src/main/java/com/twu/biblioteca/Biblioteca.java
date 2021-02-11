@@ -42,4 +42,14 @@ public class Biblioteca {
         else
             printStream.println(Messages.BOOK_CHECKOUT_UNSUCCESS);
     }
+
+    public void returnBook(int bookId) {
+        for(Book book : books){
+            if(book.id == bookId && book.available == false){
+                book.available = true;
+            }
+        }
+
+        printStream.println(Messages.BOOK_RETURN_SUCCESS);
+    }
 }

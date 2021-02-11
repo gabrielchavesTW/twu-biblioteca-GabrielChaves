@@ -67,4 +67,12 @@ public class BibliotecaTest {
         Assert.assertTrue(bookTwo.available);
         Assert.assertTrue(bookThree.available);
     }
+
+    @Test
+    public void shouldReturnABook(){
+        bookOne.available = false;
+        biblioteca.returnBook(bookOne.id);
+        verify(printStream).println(Messages.BOOK_RETURN_SUCCESS);
+        Assert.assertTrue(bookOne.available);
+    }
 }
