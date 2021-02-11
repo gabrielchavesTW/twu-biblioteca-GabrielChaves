@@ -45,8 +45,17 @@ public class BibliotecaTest {
 
     @Test
     public void shouldCheckoutABook(){
-        biblioteca.checkoutBook(bookOne);
+        biblioteca.checkoutBook(bookOne.id);
         verify(printStream).println(Messages.BOOK_CHECKOUT_SUCCESS);
         Assert.assertFalse(bookOne.available);
+    }
+
+    @Test
+    public void shouldShowBookCheckoutUnsuccessMessageAndDontCheckoutAnyBookAvailable(){
+        biblioteca.checkoutBook(1332);
+        verify(printStream).println(Messages.BOOK_CHECKOUT_UNSUCCESS);
+        Assert.assertTrue(bookOne.available);
+        Assert.assertTrue(bookTwo.available);
+        Assert.assertTrue(bookThree.available);
     }
 }

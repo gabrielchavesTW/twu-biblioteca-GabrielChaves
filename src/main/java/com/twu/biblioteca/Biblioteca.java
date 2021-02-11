@@ -29,8 +29,17 @@ public class Biblioteca {
         printStream.println(outputString);
     }
 
-    public void checkoutBook(Book book) {
-        book.available = false;
-        printStream.println(Messages.BOOK_CHECKOUT_SUCCESS);
+    public void checkoutBook(int bookId) {
+        boolean bookChecked = false;
+        for(Book book : books){
+            if(book.id == bookId){
+                book.available = false;
+                bookChecked = true;
+            }
+        }
+        if(bookChecked)
+            printStream.println(Messages.BOOK_CHECKOUT_SUCCESS);
+        else
+            printStream.println(Messages.BOOK_CHECKOUT_UNSUCCESS);
     }
 }
