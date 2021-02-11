@@ -31,6 +31,6 @@ public class Biblioteca {
 
     public void checkoutBook(Book book) {
         book.available = false;
-        printStream.println("Book checkedout");
+        printStream.println(Messages.BOOK_CHECKOUT_SUCCESS);
     }
 }
