@@ -41,7 +41,7 @@ public class BibliotecaAppTest {
             }
         };
 
-        bibliotecaApp = new BibliotecaApp(printStream, bufferedReader, biblioteca);
+        bibliotecaApp = new BibliotecaApp(printStream, bufferedReader, biblioteca, listOfBooks);
 
     }
 
@@ -56,14 +56,7 @@ public class BibliotecaAppTest {
         bibliotecaApp.showInvalidMenuOptionMessage();
         verify(printStream).println(BibliotecaApp.INVALID_OPTION_MESSAGE);
     }
-
-    @Test
-    public void shouldReturnListOfBooksWhenMenuOptionSelectedIsOne() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("1");
-        bibliotecaApp.showMenu();
-        verify(biblioteca).showListOfBooks();
-    }
-
+    
     @Test
     public void shouldShowBookCheckoutSuccessMessage() throws IOException {
         int bookId = bookOne.id;

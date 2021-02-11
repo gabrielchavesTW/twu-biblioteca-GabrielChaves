@@ -25,10 +25,11 @@ public class BibliotecaApp {
     public static final String RETURN_BOOK_INVALID_MESSAGE = "\nThat is not a valid book to return.";
 
 
-    public BibliotecaApp(PrintStream printStream, BufferedReader bufferedReader, Biblioteca biblioteca) {
+    public BibliotecaApp(PrintStream printStream, BufferedReader bufferedReader, Biblioteca biblioteca, List<Book> books) {
         this.printStream = printStream;
         this.bufferedReader = bufferedReader;
         this.biblioteca = biblioteca;
+        this.listOfBooks = books;
     }
 
     public void showWelcomeMessage() {
