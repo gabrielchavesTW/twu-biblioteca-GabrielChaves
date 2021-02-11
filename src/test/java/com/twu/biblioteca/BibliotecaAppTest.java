@@ -14,7 +14,8 @@ import static org.mockito.Mockito.*;
 
 public class BibliotecaAppTest {
     PrintStream printStream;
-    BibliotecaApp biblioteca;
+    BibliotecaApp bibliotecaApp;
+    Biblioteca biblioteca;
     BufferedReader bufferedReader;
     List<Book> listOfBooks;
     Book bookOne;
@@ -26,6 +27,7 @@ public class BibliotecaAppTest {
     public void setUp() {
         printStream = mock(PrintStream.class);
         bufferedReader = mock(BufferedReader.class);
+        biblioteca = mock(Biblioteca.class);
         invalidBookId = 3210;
 
         bookOne = new Book(1, "Hobbit", "J. R. R. Tolkien", 1937);
@@ -39,46 +41,34 @@ public class BibliotecaAppTest {
             }
         };
 
-        biblioteca = new BibliotecaApp(printStream, bufferedReader, listOfBooks);
+        bibliotecaApp = new BibliotecaApp(printStream, bufferedReader, biblioteca);
+
     }
 
     @Test
     public void shouldShowWelcomeMessage() {
-        biblioteca.showWelcomeMessage();
+        bibliotecaApp.showWelcomeMessage();
         verify(printStream).println(BibliotecaApp.WELCOME_MESSAGE);
     }
 
     @Test
     public void shouldShowInvalidOptionMessage() {
-        biblioteca.showInvalidMenuOptionMessage();
+        bibliotecaApp.showInvalidMenuOptionMessage();
         verify(printStream).println(BibliotecaApp.INVALID_OPTION_MESSAGE);
     }
 
     @Test
-    public void shouldReturnListOfBooksWhenMenuOptionSelectedIsOne() {
-        biblioteca.showListOfBooks();
-        verify(printStream).println("\n1.Name: Hobbit | Author: J. R. R. Tolkien | Year: 1937" +
-                "\n2.Name: Perdido em Marte | Author: Andy Weir | Year: 2011" +
-                "\n3.Name: Estação Carandiru | Author: Drauzio Varella | Year: 1999");
-    }
-
-
-    @Test
-    public void shouldShowOnlyAvailableBooks() {
-        int bookIndex = listOfBooks.indexOf(bookOne);
-        Book book = listOfBooks.get(bookIndex);
-        book.setAvailable(false);
-
-        biblioteca.showListOfBooks();
-        verify(printStream).println("\n2.Name: Perdido em Marte | Author: Andy Weir | Year: 2011" +
-                "\n3.Name: Estação Carandiru | Author: Drauzio Varella | Year: 1999");
+    public void shouldReturnListOfBooksWhenMenuOptionSelectedIsOne() throws IOException {
+        when(bufferedReader.readLine()).thenReturn("1");
+        bibliotecaApp.showMenu();
+        verify(biblioteca).showListOfBooks();
     }
 
     @Test
     public void shouldShowBookCheckoutSuccessMessage() throws IOException {
         int bookId = bookOne.id;
         when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
-        biblioteca.showCheckoutOption();
+        bibliotecaApp.showCheckoutOption();
         verify(printStream).println(BibliotecaApp.CHECKOUT_BOOK_MESSAGE);
         verify(printStream).println(BibliotecaApp.CHECKOUT_SUCCESS_MESSAGE);
     }
@@ -86,7 +76,7 @@ public class BibliotecaAppTest {
     @Test
     public void shouldShowBookCheckoutInvalidMessage() throws IOException {
         when(bufferedReader.readLine()).thenReturn(String.valueOf(invalidBookId));
-        biblioteca.showCheckoutOption();
+        bibliotecaApp.showCheckoutOption();
         verify(printStream).println(BibliotecaApp.CHECKOUT_BOOK_MESSAGE);
         verify(printStream).println(BibliotecaApp.CHECKOUT_INVALID_MESSAGE);
     }
@@ -96,7 +86,7 @@ public class BibliotecaAppTest {
         int bookId = bookOne.id;
         bookOne.setAvailable(false);
         when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
-        biblioteca.showReturnBookOption();
+        bibliotecaApp.showReturnBookOption();
         Assertions.assertTrue(bookOne.isAvailable());
         verify(printStream).println(BibliotecaApp.RETURN_BOOK_SUCCESS_MESSAGE);
     }
@@ -104,19 +94,9 @@ public class BibliotecaAppTest {
     @Test
     public void shouldShowReturnBookInvalidMessage() throws IOException {
         when(bufferedReader.readLine()).thenReturn(String.valueOf(invalidBookId));
-        biblioteca.showReturnBookOption();
+        bibliotecaApp.showReturnBookOption();
         Assertions.assertTrue(bookOne.isAvailable());
         verify(printStream).println(BibliotecaApp.RETURN_BOOK_INVALID_MESSAGE);
-    }
-
-    @Test
-    public void shouldShowNoBooksAvailableMessage(){
-        bookOne.setAvailable(false);
-        bookTwo.setAvailable(false);
-        bookThree.setAvailable(false);
-        biblioteca.showListOfBooks();
-
-        verify(printStream).println(BibliotecaApp.NO_BOOKS_AVAILABLE_MESSAGE);
     }
 
     @Test
@@ -124,7 +104,7 @@ public class BibliotecaAppTest {
         int bookId = bookOne.id;
         bookOne.setAvailable(false);
         when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
-        biblioteca.showCheckoutOption();
+        bibliotecaApp.showCheckoutOption();
         verify(printStream).println(BibliotecaApp.CHECKOUT_BOOK_MESSAGE);
         verify(printStream).println(BibliotecaApp.CHECKOUT_INVALID_MESSAGE);
     }

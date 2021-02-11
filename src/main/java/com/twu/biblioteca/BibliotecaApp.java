@@ -3,7 +3,6 @@ package com.twu.biblioteca;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.text.MessageFormat;
 import java.util.List;
 
 public class BibliotecaApp {
@@ -11,7 +10,8 @@ public class BibliotecaApp {
 
     private final PrintStream printStream;
     private final BufferedReader bufferedReader;
-    private final List<Book> listOfBooks;
+    private List<Book> listOfBooks;
+    private final Biblioteca biblioteca;
     public static final String WELCOME_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
     public static final String MENU = "----------------------------------------------------------------------------------------------------------" +
             "\n1- List of books\n2- Checkout a book\n3-Return a book\n0- Exit\n" +
@@ -23,13 +23,12 @@ public class BibliotecaApp {
     public static final String RETURN_BOOK_OPTION = "\nType the book number that you want to return:";
     public static final String RETURN_BOOK_SUCCESS_MESSAGE = "\nThank you for returning the book.";
     public static final String RETURN_BOOK_INVALID_MESSAGE = "\nThat is not a valid book to return.";
-    public static final String NO_BOOKS_AVAILABLE_MESSAGE = "\nNo books available.";
 
 
-    public BibliotecaApp(PrintStream printStream, BufferedReader bufferedReader, List<Book> listOfBooks) {
+    public BibliotecaApp(PrintStream printStream, BufferedReader bufferedReader, Biblioteca biblioteca) {
         this.printStream = printStream;
         this.bufferedReader = bufferedReader;
-        this.listOfBooks = listOfBooks;
+        this.biblioteca = biblioteca;
     }
 
     public void showWelcomeMessage() {
@@ -48,7 +47,7 @@ public class BibliotecaApp {
 
     private void showSelectedMenuOption(String menuOption) throws IOException {
         if (menuOption.equals("1")) {
-            showListOfBooks();
+            biblioteca.showListOfBooks();
         } else if (menuOption.equals("2")) {
             showCheckoutOption();
         } else if (menuOption.equals("3")) {
@@ -66,19 +65,6 @@ public class BibliotecaApp {
         printStream.println(INVALID_OPTION_MESSAGE);
     }
 
-    public void showListOfBooks() {
-        String outputString = "";
-        for (Book book : listOfBooks) {
-            if (book.isAvailable())
-                outputString += (MessageFormat.format("\n{0}.Name: {1} | Author: {2} | Year: {3}", book.id, book.name, book.author, String.valueOf(book.year)));
-        }
-
-        if(outputString.isEmpty()){
-            outputString = NO_BOOKS_AVAILABLE_MESSAGE;
-        }
-
-        printStream.println(outputString);
-    }
 
     public void showCheckoutOption() throws IOException {
         printStream.println(CHECKOUT_BOOK_MESSAGE);

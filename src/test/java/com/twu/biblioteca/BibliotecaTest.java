@@ -77,8 +77,18 @@ public class BibliotecaTest {
     }
 
     @Test
-    public void shoulShowUnsuccessReturnMessageWhenBookIdDoesntExist(){
+    public void shouldShowUnsuccessReturnMessageWhenBookIdDoesntExist(){
         biblioteca.returnBook(1332);
         verify(printStream).println(Messages.BOOK_RETURN_UNSUCCESS);
+    }
+
+    @Test
+    public void shouldShowNoBooksAvailableMessage(){
+        bookOne.setAvailable(false);
+        bookTwo.setAvailable(false);
+        bookThree.setAvailable(false);
+        biblioteca.showListOfBooks();
+
+        verify(printStream).println(Messages.NO_BOOKS_AVAILABLE_MESSAGE);
     }
 }
