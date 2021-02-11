@@ -60,7 +60,7 @@ public class BibliotecaTest {
     }
 
     @Test
-    public void shouldShowBookCheckoutUnsuccessMessageAndDontCheckoutAnyBookAvailable(){
+    public void shouldShowBookCheckoutUnsuccessMessageWhenBookIdDoenstExist(){
         biblioteca.checkoutBook(1332);
         verify(printStream).println(Messages.BOOK_CHECKOUT_UNSUCCESS);
         Assert.assertTrue(bookOne.available);
@@ -74,5 +74,11 @@ public class BibliotecaTest {
         biblioteca.returnBook(bookOne.id);
         verify(printStream).println(Messages.BOOK_RETURN_SUCCESS);
         Assert.assertTrue(bookOne.available);
+    }
+
+    @Test
+    public void shoulShowUnsuccessReturnMessageWhenBookIdDoesntExist(){
+        biblioteca.returnBook(1332);
+        verify(printStream).println(Messages.BOOK_RETURN_UNSUCCESS);
     }
 }

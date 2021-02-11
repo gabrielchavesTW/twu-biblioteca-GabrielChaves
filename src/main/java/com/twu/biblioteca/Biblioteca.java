@@ -44,12 +44,16 @@ public class Biblioteca {
     }
 
     public void returnBook(int bookId) {
+        boolean bookReturned = false;
         for(Book book : books){
             if(book.id == bookId && book.available == false){
                 book.available = true;
+                bookReturned = true;
             }
         }
-
-        printStream.println(Messages.BOOK_RETURN_SUCCESS);
+        if(bookReturned)
+            printStream.println(Messages.BOOK_RETURN_SUCCESS);
+        else
+            printStream.println(Messages.BOOK_RETURN_UNSUCCESS);
     }
 }
