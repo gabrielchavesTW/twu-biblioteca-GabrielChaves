@@ -43,7 +43,7 @@ public class BibliotecaTest {
     }
 
     @Test
-    public void shouldCheckoutABook(){
+    public void shouldShowBookCheckoutSuccessMessage(){
         biblioteca.checkoutBook(bookOne.id);
         verify(printStream).println(Messages.BOOK_CHECKOUT_SUCCESS);
         Assertions.assertFalse(bookOne.isAvailable());
@@ -68,7 +68,7 @@ public class BibliotecaTest {
     }
 
     @Test
-    public void shouldShowMessageWhenTryToCheckoutABookThatWasAlreadyChecked() {
+    public void shouldShowBookCheckoutUnsuccessMessageWhenTryToCheckoutABookThatWasAlreadyChecked() {
         int bookId = bookOne.id;
         bookOne.setAvailable(false);
         biblioteca.checkoutBook(bookId);
@@ -76,7 +76,7 @@ public class BibliotecaTest {
     }
 
     @Test
-    public void shouldReturnABook(){
+    public void shouldShowBookReturnSuccessMessage(){
         bookOne.setAvailable(false);
         biblioteca.returnBook(bookOne.id);
         verify(printStream).println(Messages.BOOK_RETURN_SUCCESS);
