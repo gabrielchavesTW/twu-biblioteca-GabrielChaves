@@ -1,7 +1,7 @@
 package com.main;
 
 import com.twu.biblioteca.Biblioteca;
-import com.twu.biblioteca.BibliotecaApp;
+import com.twu.biblioteca.Menu;
 import com.twu.biblioteca.Book;
 
 import java.io.BufferedReader;
@@ -13,9 +13,9 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
         Biblioteca biblioteca = new Biblioteca(System.out, books());
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(System.out, new BufferedReader(new InputStreamReader(System.in)), biblioteca);
-        bibliotecaApp.showWelcomeMessage();
-        bibliotecaApp.showMenu();
+        Menu menu = new Menu(System.out, new BufferedReader(new InputStreamReader(System.in)), biblioteca);
+        menu.showWelcomeMessage();
+        menu.showMenu();
     }
 
     private static List<Book> books() {

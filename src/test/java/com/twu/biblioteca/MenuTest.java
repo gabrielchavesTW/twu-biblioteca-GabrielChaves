@@ -9,9 +9,9 @@ import java.io.PrintStream;
 
 import static org.mockito.Mockito.*;
 
-public class BibliotecaAppTest {
+public class MenuTest {
     PrintStream printStream;
-    BibliotecaApp bibliotecaApp;
+    Menu menu;
     Biblioteca biblioteca;
     BufferedReader bufferedReader;
     int bookId;
@@ -23,25 +23,25 @@ public class BibliotecaAppTest {
         biblioteca = mock(Biblioteca.class);
         bookId = 1;
 
-        bibliotecaApp = new BibliotecaApp(printStream, bufferedReader, biblioteca);
+        menu = new Menu(printStream, bufferedReader, biblioteca);
     }
 
     @Test
     public void shouldShowWelcomeMessage() {
-        bibliotecaApp.showWelcomeMessage();
+        menu.showWelcomeMessage();
         verify(printStream).println(Messages.WELCOME);
     }
 
     @Test
     public void shouldShowInvalidOptionMessage() {
-        bibliotecaApp.showInvalidMenuOptionMessage();
+        menu.showInvalidMenuOptionMessage();
         verify(printStream).println(Messages.INVALID_OPTION);
     }
 
     @Test
     public void shouldShowCheckoutBookMessageAndCallCheckoutBook() throws IOException {
         when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
-        bibliotecaApp.showCheckoutOption();
+        menu.showCheckoutOption();
         verify(printStream).println(Messages.CHECKOUT_BOOK);
         verify(biblioteca).checkoutBook(bookId);
     }
@@ -49,7 +49,7 @@ public class BibliotecaAppTest {
     @Test
     public void shouldShowReturnBookOptionAndCallReturnBook() throws IOException {
         when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
-        bibliotecaApp.showReturnBookOption();
+        menu.showReturnBookOption();
         verify(printStream).println(Messages.RETURN_BOOK_OPTION);
         verify(biblioteca).returnBook(bookId);
     }

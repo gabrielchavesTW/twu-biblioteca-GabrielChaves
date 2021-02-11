@@ -4,16 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
 
-public class BibliotecaApp {
-
-
+public class Menu {
     private final PrintStream printStream;
     private final BufferedReader bufferedReader;
     private final Biblioteca biblioteca;
 
-
-
-    public BibliotecaApp(PrintStream printStream, BufferedReader bufferedReader, Biblioteca biblioteca) {
+    public Menu(PrintStream printStream, BufferedReader bufferedReader, Biblioteca biblioteca) {
         this.printStream = printStream;
         this.bufferedReader = bufferedReader;
         this.biblioteca = biblioteca;
