@@ -29,20 +29,20 @@ public class BibliotecaAppTest {
     @Test
     public void shouldShowWelcomeMessage() {
         bibliotecaApp.showWelcomeMessage();
-        verify(printStream).println(BibliotecaApp.WELCOME_MESSAGE);
+        verify(printStream).println(Messages.WELCOME);
     }
 
     @Test
     public void shouldShowInvalidOptionMessage() {
         bibliotecaApp.showInvalidMenuOptionMessage();
-        verify(printStream).println(BibliotecaApp.INVALID_OPTION_MESSAGE);
+        verify(printStream).println(Messages.INVALID_OPTION);
     }
 
     @Test
     public void shouldShowCheckoutBookMessageAndCallCheckoutBook() throws IOException {
         when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
         bibliotecaApp.showCheckoutOption();
-        verify(printStream).println(BibliotecaApp.CHECKOUT_BOOK_MESSAGE);
+        verify(printStream).println(Messages.CHECKOUT_BOOK);
         verify(biblioteca).checkoutBook(bookId);
     }
 
@@ -50,7 +50,7 @@ public class BibliotecaAppTest {
     public void shouldShowReturnBookOptionAndCallReturnBook() throws IOException {
         when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
         bibliotecaApp.showReturnBookOption();
-        verify(printStream).println(BibliotecaApp.RETURN_BOOK_OPTION);
+        verify(printStream).println(Messages.RETURN_BOOK_OPTION);
         verify(biblioteca).returnBook(bookId);
     }
 }

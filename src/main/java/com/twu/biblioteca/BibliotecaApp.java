@@ -10,13 +10,7 @@ public class BibliotecaApp {
     private final PrintStream printStream;
     private final BufferedReader bufferedReader;
     private final Biblioteca biblioteca;
-    public static final String WELCOME_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
-    public static final String MENU = "----------------------------------------------------------------------------------------------------------" +
-            "\n1- List of books\n2- Checkout a book\n3-Return a book\n0- Exit\n" +
-            "----------------------------------------------------------------------------------------------------------";
-    public static final String INVALID_OPTION_MESSAGE = "\nInvalid option.";
-    public static final String CHECKOUT_BOOK_MESSAGE = "\nType the number of the book to checkout it.";
-    public static final String RETURN_BOOK_OPTION = "\nType the book number that you want to return:";
+
 
 
     public BibliotecaApp(PrintStream printStream, BufferedReader bufferedReader, Biblioteca biblioteca) {
@@ -26,11 +20,11 @@ public class BibliotecaApp {
     }
 
     public void showWelcomeMessage() {
-        printStream.println(WELCOME_MESSAGE);
+        printStream.println(Messages.WELCOME);
     }
 
     public void showMenu() throws IOException {
-        printStream.println(MENU);
+        printStream.println(Messages.MENU);
         readMenuOption();
     }
 
@@ -56,12 +50,12 @@ public class BibliotecaApp {
     }
 
     public void showInvalidMenuOptionMessage() {
-        printStream.println(INVALID_OPTION_MESSAGE);
+        printStream.println(Messages.INVALID_OPTION);
     }
 
 
     public void showCheckoutOption() throws IOException {
-        printStream.println(CHECKOUT_BOOK_MESSAGE);
+        printStream.println(Messages.CHECKOUT_BOOK);
         readCheckoutOption();
     }
 
@@ -71,7 +65,7 @@ public class BibliotecaApp {
     }
 
     public void showReturnBookOption() throws IOException {
-        printStream.println(RETURN_BOOK_OPTION);
+        printStream.println(Messages.RETURN_BOOK_OPTION);
         readReturnBookOption();
     }
 
