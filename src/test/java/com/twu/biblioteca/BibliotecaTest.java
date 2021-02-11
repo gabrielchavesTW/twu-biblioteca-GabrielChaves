@@ -51,6 +51,15 @@ public class BibliotecaTest {
     }
 
     @Test
+    public void shouldShowOnlyAvailableBooks()
+    {
+        biblioteca.checkoutBook(bookOne.id);
+        biblioteca.showListOfBooks();
+        verify(printStream).println("\n2.Name: Perdido em Marte | Author: Andy Weir | Year: 2011" +
+                "\n3.Name: Estação Carandiru | Author: Drauzio Varella | Year: 1999");
+    }
+
+    @Test
     public void shouldShowBookCheckoutUnsuccessMessageAndDontCheckoutAnyBookAvailable(){
         biblioteca.checkoutBook(1332);
         verify(printStream).println(Messages.BOOK_CHECKOUT_UNSUCCESS);
