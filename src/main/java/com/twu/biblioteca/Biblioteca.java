@@ -32,7 +32,7 @@ public class Biblioteca {
     public void checkoutBook(int bookId) {
         boolean bookChecked = false;
         for(Book book : books){
-            if(book.id == bookId){
+            if(book.id == bookId && book.isAvailable()){
                 book.setAvailable(false);
                 bookChecked = true;
             }

@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class BibliotecaTest {
     PrintStream printStream;
@@ -66,6 +66,14 @@ public class BibliotecaTest {
         Assertions.assertTrue(bookOne.isAvailable());
         Assertions.assertTrue(bookTwo.isAvailable());
         Assertions.assertTrue(bookThree.isAvailable());
+    }
+
+    @Test
+    public void shouldShowMessageWhenTryToCheckoutABookThatWasAlreadyChecked() {
+        int bookId = bookOne.id;
+        bookOne.setAvailable(false);
+        biblioteca.checkoutBook(bookId);
+        verify(printStream).println(Messages.BOOK_CHECKOUT_UNSUCCESS);
     }
 
     @Test
