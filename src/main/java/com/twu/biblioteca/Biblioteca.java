@@ -18,7 +18,7 @@ public class Biblioteca {
     public void showListOfBooks() {
         String outputString = "";
         for (Book book : books) {
-            if (book.available)
+            if (book.isAvailable())
                 outputString += (MessageFormat.format("\n{0}.Name: {1} | Author: {2} | Year: {3}", book.id, book.name, book.author, String.valueOf(book.year)));
         }
 
@@ -33,7 +33,7 @@ public class Biblioteca {
         boolean bookChecked = false;
         for(Book book : books){
             if(book.id == bookId){
-                book.available = false;
+                book.setAvailable(false);
                 bookChecked = true;
             }
         }
@@ -46,8 +46,8 @@ public class Biblioteca {
     public void returnBook(int bookId) {
         boolean bookReturned = false;
         for(Book book : books){
-            if(book.id == bookId && book.available == false){
-                book.available = true;
+            if(book.id == bookId && !book.isAvailable()){
+                book.setAvailable(true);
                 bookReturned = true;
             }
         }

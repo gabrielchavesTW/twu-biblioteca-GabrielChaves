@@ -5,7 +5,7 @@ public class Book {
     String name;
     String author;
     int year;
-    boolean available;
+    private boolean available;
 
     public void setAvailable(boolean available) {
         this.available = available;
@@ -16,6 +16,10 @@ public class Book {
         this.name = name;
         this.author = author;
         this.year = year;
-        this.available = true;
+        this.setAvailable(true);
+    }
+
+    public boolean isAvailable() {
+        return available;
     }
 }

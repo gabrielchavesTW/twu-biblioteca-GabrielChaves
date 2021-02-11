@@ -69,7 +69,7 @@ public class BibliotecaApp {
     public void showListOfBooks() {
         String outputString = "";
         for (Book book : listOfBooks) {
-            if (book.available)
+            if (book.isAvailable())
                 outputString += (MessageFormat.format("\n{0}.Name: {1} | Author: {2} | Year: {3}", book.id, book.name, book.author, String.valueOf(book.year)));
         }
 
@@ -93,7 +93,7 @@ public class BibliotecaApp {
     private void checkoutBook(int bookId) {
         boolean bookFindedAndChecked = false;
         for (Book book : listOfBooks) {
-            if (book.id == bookId && book.available == true) {
+            if (book.id == bookId && book.isAvailable() == true) {
                 book.setAvailable(false);
                 bookFindedAndChecked = true;
             }

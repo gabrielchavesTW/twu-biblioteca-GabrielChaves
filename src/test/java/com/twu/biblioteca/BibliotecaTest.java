@@ -1,6 +1,6 @@
 package com.twu.biblioteca;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -47,7 +47,7 @@ public class BibliotecaTest {
     public void shouldCheckoutABook(){
         biblioteca.checkoutBook(bookOne.id);
         verify(printStream).println(Messages.BOOK_CHECKOUT_SUCCESS);
-        Assert.assertFalse(bookOne.available);
+        Assertions.assertFalse(bookOne.isAvailable());
     }
 
     @Test
@@ -63,17 +63,17 @@ public class BibliotecaTest {
     public void shouldShowBookCheckoutUnsuccessMessageWhenBookIdDoenstExist(){
         biblioteca.checkoutBook(1332);
         verify(printStream).println(Messages.BOOK_CHECKOUT_UNSUCCESS);
-        Assert.assertTrue(bookOne.available);
-        Assert.assertTrue(bookTwo.available);
-        Assert.assertTrue(bookThree.available);
+        Assertions.assertTrue(bookOne.isAvailable());
+        Assertions.assertTrue(bookTwo.isAvailable());
+        Assertions.assertTrue(bookThree.isAvailable());
     }
 
     @Test
     public void shouldReturnABook(){
-        bookOne.available = false;
+        bookOne.setAvailable(false);
         biblioteca.returnBook(bookOne.id);
         verify(printStream).println(Messages.BOOK_RETURN_SUCCESS);
-        Assert.assertTrue(bookOne.available);
+        Assertions.assertTrue(bookOne.isAvailable());
     }
 
     @Test

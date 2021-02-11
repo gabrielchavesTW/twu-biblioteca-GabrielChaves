@@ -97,7 +97,7 @@ public class BibliotecaAppTest {
         bookOne.setAvailable(false);
         when(bufferedReader.readLine()).thenReturn(String.valueOf(bookId));
         biblioteca.showReturnBookOption();
-        Assertions.assertTrue(bookOne.available);
+        Assertions.assertTrue(bookOne.isAvailable());
         verify(printStream).println(BibliotecaApp.RETURN_BOOK_SUCCESS_MESSAGE);
     }
 
@@ -105,15 +105,15 @@ public class BibliotecaAppTest {
     public void shouldShowReturnBookInvalidMessage() throws IOException {
         when(bufferedReader.readLine()).thenReturn(String.valueOf(invalidBookId));
         biblioteca.showReturnBookOption();
-        Assertions.assertTrue(bookOne.available);
+        Assertions.assertTrue(bookOne.isAvailable());
         verify(printStream).println(BibliotecaApp.RETURN_BOOK_INVALID_MESSAGE);
     }
 
     @Test
     public void shouldShowNoBooksAvailableMessage(){
-        bookOne.available = false;
-        bookTwo.available = false;
-        bookThree.available = false;
+        bookOne.setAvailable(false);
+        bookTwo.setAvailable(false);
+        bookThree.setAvailable(false);
         biblioteca.showListOfBooks();
 
         verify(printStream).println(BibliotecaApp.NO_BOOKS_AVAILABLE_MESSAGE);
